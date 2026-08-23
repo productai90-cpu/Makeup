@@ -20,6 +20,7 @@
         --cream: #fbf8f6;
         --paper: #fffdfc;
         --line: #e8dedd;
+        --err: #b23b3b;
         --serif: Georgia, "Times New Roman", serif;
         --sans:
           Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -535,6 +536,24 @@
         opacity: 0.35;
         cursor: not-allowed;
         text-decoration: line-through;
+      }
+      .slots-error {
+        grid-column: 1/-1;
+        text-align: center;
+        padding: 20px;
+        border: 1px dashed var(--line);
+        font-size: 12.5px;
+        color: var(--err);
+      }
+      .slots-error button {
+        display: inline-block;
+        margin-top: 10px;
+        background: transparent;
+        border: 1px solid var(--err);
+        color: var(--err);
+        padding: 8px 16px;
+        font-size: 11px;
+        cursor: pointer;
       }
 
       /* step 3: contact form */
@@ -1182,29 +1201,44 @@
       }
 
       var takenTimes = new Set();
+      var slotsLoadFailed = false;
       async function loadTakenTimesForDay(d) {
         var iso = toIsoDate(d);
         takenTimes = new Set();
+        slotsLoadFailed = false;
         renderTimeGrid();
         try {
           var res = await sb.rpc("get_taken_slots", { p_date: iso });
           if (res.error) {
-            console.error(res.error);
-            return;
+            console.error("get_taken_slots error:", res.error);
+            slotsLoadFailed = true;
+          } else {
+            takenTimes = new Set(
+              (res.data || []).map(function (r) {
+                return r.booking_time.slice(0, 5);
+              }),
+            );
           }
-          takenTimes = new Set(
-            (res.data || []).map(function (r) {
-              return r.booking_time.slice(0, 5);
-            }),
-          );
         } catch (err) {
-          console.error(err);
+          console.error("get_taken_slots exception:", err);
+          slotsLoadFailed = true;
         }
         renderTimeGrid();
       }
 
       function renderTimeGrid() {
         timeGrid.innerHTML = "";
+        if (slotsLoadFailed) {
+          timeGrid.innerHTML =
+            '<div class="slots-error">امکان بررسی ساعت‌های پر وجود نداشت. <button type="button" id="retrySlots">تلاش دوباره</button></div>';
+          var retryBtn = document.getElementById("retrySlots");
+          if (retryBtn) {
+            retryBtn.addEventListener("click", function () {
+              if (state.dateObj) loadTakenTimesForDay(state.dateObj);
+            });
+          }
+          return;
+        }
         timeSlots.forEach(function (t) {
           var isTaken = takenTimes.has(t.value);
           var chip = document.createElement("div");
@@ -1415,6 +1449,43 @@
       var confirmBtn = document.getElementById("confirmBooking");
       confirmBtn.addEventListener("click", async function () {
         confirmBtn.disabled = true;
+        confirmBtn.textContent = "در حال بررسی...";
+
+        // Defensive re-check right before writing, in case the slot was
+        // taken after step 2 was loaded (or the earlier availability check failed silently)
+        try {
+          var checkRes = await sb.rpc("get_taken_slots", {
+            p_date: toIsoDate(state.dateObj),
+          });
+          if (checkRes.error) {
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = "تایید نهایی رزرو";
+            alert(
+              "امکان بررسی وضعیت این تایم وجود نداشت. لطفاً دوباره امتحان کن.",
+            );
+            return;
+          }
+          var stillFree = !(checkRes.data || []).some(function (r) {
+            return r.booking_time.slice(0, 5) === state.timeValue;
+          });
+          if (!stillFree) {
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = "تایید نهایی رزرو";
+            alert("این تایم همین الان پر شد. لطفاً یک ساعت دیگه انتخاب کن.");
+            goToStep(2);
+            loadTakenTimesForDay(state.dateObj);
+            return;
+          }
+        } catch (err) {
+          console.error("pre-confirm check exception:", err);
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = "تایید نهایی رزرو";
+          alert(
+            "امکان بررسی وضعیت این تایم وجود نداشت. لطفاً دوباره امتحان کن.",
+          );
+          return;
+        }
+
         confirmBtn.textContent = "در حال ثبت...";
 
         var payload = {
