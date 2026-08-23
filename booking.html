@@ -1,610 +1,1471 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>رزرو نوبت — سونیا میکاپ آرتیست</title>
-  <meta name="description" content="رزرو آنلاین نوبت میکاپ با سونیا؛ انتخاب خدمت، تاریخ و ساعت، اطلاعات تماس و تایید نهایی.">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap');
-    :root{
-      --ink:#302a2b;
-      --muted:#7c7071;
-      --rose:#d9b8bb;
-      --rose-deep:#b98e93;
-      --blush:#f4e9e8;
-      --cream:#fbf8f6;
-      --paper:#fffdfc;
-      --line:#e8dedd;
-      --serif: Georgia, "Times New Roman", serif;
-      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      --max:920px;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;overflow-x:hidden}
-    a{color:inherit;text-decoration:none}
-    button{font:inherit;cursor:pointer}
-    input,textarea{font:inherit}
-    .container{width:min(calc(100% - 48px),var(--max));margin:auto}
-    .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose-deep);font-weight:700}
-    h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.1;margin:0}
-    h1{font-size:clamp(30px,4.4vw,44px);letter-spacing:-.02em}
-    h3{font-size:19px}
-    p{margin:0;color:var(--muted)}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      min-height:48px;padding:0 26px;border:1px solid var(--ink);
-      background:var(--ink);color:#fff;text-transform:uppercase;
-      letter-spacing:.12em;font-size:11px;font-weight:700;transition:.25s;
-      border-radius:2px
-    }
-    .btn:hover{background:transparent;color:var(--ink)}
-    .btn.light{background:transparent;color:var(--ink)}
-    .btn.light:hover{background:var(--ink);color:#fff}
-    .btn.primary{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff}
-    .btn.primary:hover{background:transparent;color:var(--rose-deep)}
-    .btn:disabled{opacity:.4;pointer-events:none}
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>رزرو نوبت — سونیا میکاپ آرتیست</title>
+    <meta
+      name="description"
+      content="رزرو آنلاین نوبت میکاپ با سونیا؛ انتخاب خدمت، تاریخ و ساعت، اطلاعات تماس و تایید نهایی."
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap");
+      :root {
+        --ink: #302a2b;
+        --muted: #7c7071;
+        --rose: #d9b8bb;
+        --rose-deep: #b98e93;
+        --blush: #f4e9e8;
+        --cream: #fbf8f6;
+        --paper: #fffdfc;
+        --line: #e8dedd;
+        --serif: Georgia, "Times New Roman", serif;
+        --sans:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        --max: 920px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--sans);
+        font-size: 15px;
+        line-height: 1.65;
+        overflow-x: hidden;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button {
+        font: inherit;
+        cursor: pointer;
+      }
+      input,
+      textarea {
+        font: inherit;
+      }
+      .container {
+        width: min(calc(100% - 48px), var(--max));
+        margin: auto;
+      }
+      .eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--rose-deep);
+        font-weight: 700;
+      }
+      h1,
+      h2,
+      h3 {
+        font-family: var(--serif);
+        font-weight: 400;
+        line-height: 1.1;
+        margin: 0;
+      }
+      h1 {
+        font-size: clamp(30px, 4.4vw, 44px);
+        letter-spacing: -0.02em;
+      }
+      h3 {
+        font-size: 19px;
+      }
+      p {
+        margin: 0;
+        color: var(--muted);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        min-height: 48px;
+        padding: 0 26px;
+        border: 1px solid var(--ink);
+        background: var(--ink);
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 11px;
+        font-weight: 700;
+        transition: 0.25s;
+        border-radius: 2px;
+      }
+      .btn:hover {
+        background: transparent;
+        color: var(--ink);
+      }
+      .btn.light {
+        background: transparent;
+        color: var(--ink);
+      }
+      .btn.light:hover {
+        background: var(--ink);
+        color: #fff;
+      }
+      .btn.primary {
+        background: var(--rose-deep);
+        border-color: var(--rose-deep);
+        color: #fff;
+      }
+      .btn.primary:hover {
+        background: transparent;
+        color: var(--rose-deep);
+      }
+      .btn:disabled {
+        opacity: 0.4;
+        pointer-events: none;
+      }
 
-    header.site-header{padding:24px 0;border-bottom:1px solid var(--line)}
-    .nav{display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;flex-direction:column;line-height:1;text-align:right}
-    .brand-main{font-family:var(--serif);font-size:22px;letter-spacing:-.03em}
-    .brand-sub{font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-top:6px}
-    .back-link{font-size:11px;letter-spacing:.08em;display:flex;align-items:center;gap:8px;color:var(--muted)}
-    .back-link:hover{color:var(--ink)}
+      header.site-header {
+        padding: 24px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .brand {
+        display: flex;
+        flex-direction: column;
+        line-height: 1;
+        text-align: right;
+      }
+      .brand-main {
+        font-family: var(--serif);
+        font-size: 22px;
+        letter-spacing: -0.03em;
+      }
+      .brand-sub {
+        font-size: 8px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+      .back-link {
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--muted);
+      }
+      .back-link:hover {
+        color: var(--ink);
+      }
 
-    .page-head{padding:56px 0 8px;text-align:center}
-    .page-head p{max-width:460px;margin:14px auto 0}
+      .page-head {
+        padding: 56px 0 8px;
+        text-align: center;
+      }
+      .page-head p {
+        max-width: 460px;
+        margin: 14px auto 0;
+      }
 
-    /* step indicator */
-    .steps-bar{padding:40px 0 10px}
-    .steps{display:flex;align-items:center;justify-content:center}
-    .step{display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;flex:1;max-width:140px}
-    .step-circle{
-      width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;
-      display:grid;place-items:center;font-family:var(--serif);font-size:14px;color:var(--muted);
-      transition:.25s;position:relative;z-index:2
-    }
-    .step-label{font-size:10.5px;letter-spacing:.04em;color:var(--muted);text-align:center;white-space:nowrap}
-    .step-line{position:absolute;top:17px;left:50%;width:100%;height:1px;background:var(--line);z-index:1}
-    .step:first-child .step-line{display:none}
-    .step.active .step-circle{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff}
-    .step.active .step-label{color:var(--ink);font-weight:600}
-    .step.done .step-circle{background:var(--ink);border-color:var(--ink);color:#fff}
-    .step.done .step-line{background:var(--ink)}
+      /* step indicator */
+      .steps-bar {
+        padding: 40px 0 10px;
+      }
+      .steps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+        flex: 1;
+        max-width: 140px;
+      }
+      .step-circle {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: #fff;
+        display: grid;
+        place-items: center;
+        font-family: var(--serif);
+        font-size: 14px;
+        color: var(--muted);
+        transition: 0.25s;
+        position: relative;
+        z-index: 2;
+      }
+      .step-label {
+        font-size: 10.5px;
+        letter-spacing: 0.04em;
+        color: var(--muted);
+        text-align: center;
+        white-space: nowrap;
+      }
+      .step-line {
+        position: absolute;
+        top: 17px;
+        left: 50%;
+        width: 100%;
+        height: 1px;
+        background: var(--line);
+        z-index: 1;
+      }
+      .step:first-child .step-line {
+        display: none;
+      }
+      .step.active .step-circle {
+        background: var(--rose-deep);
+        border-color: var(--rose-deep);
+        color: #fff;
+      }
+      .step.active .step-label {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .step.done .step-circle {
+        background: var(--ink);
+        border-color: var(--ink);
+        color: #fff;
+      }
+      .step.done .step-line {
+        background: var(--ink);
+      }
 
-    .booking-wrap{padding:20px 0 100px}
-    .panel{display:none;animation:fade .35s ease}
-    .panel.active{display:block}
-    @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+      .booking-wrap {
+        padding: 20px 0 100px;
+      }
+      .panel {
+        display: none;
+        animation: fade 0.35s ease;
+      }
+      .panel.active {
+        display: block;
+      }
+      @keyframes fade {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-    .panel-head{margin-bottom:28px;text-align:center}
-    .panel-head h2{font-size:24px;margin-top:6px}
+      .panel-head {
+        margin-bottom: 28px;
+        text-align: center;
+      }
+      .panel-head h2 {
+        font-size: 24px;
+        margin-top: 6px;
+      }
 
-    /* step 1: services */
-    .svc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    .svc-card{
-      border:1px solid var(--line);padding:22px;cursor:pointer;transition:.2s;background:#fff;text-align:right
-    }
-    .svc-card:hover{border-color:var(--rose)}
-    .svc-card.selected{border-color:var(--rose-deep);background:var(--blush);box-shadow:0 0 0 1px var(--rose-deep) inset}
-    .svc-top{display:flex;justify-content:space-between;align-items:start;gap:10px}
-    .svc-name{font-family:var(--serif);font-size:17px}
-    .svc-check{width:20px;height:20px;border-radius:50%;border:1px solid var(--line);flex:none;display:grid;place-items:center;font-size:11px;color:transparent;transition:.2s}
-    .svc-card.selected .svc-check{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff}
-    .svc-meta{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-size:12px;color:var(--muted)}
-    .svc-price{font-family:var(--serif);font-size:16px;color:var(--ink)}
+      /* step 1: services */
+      .svc-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .svc-card {
+        border: 1px solid var(--line);
+        padding: 22px;
+        cursor: pointer;
+        transition: 0.2s;
+        background: #fff;
+        text-align: right;
+      }
+      .svc-card:hover {
+        border-color: var(--rose);
+      }
+      .svc-card.selected {
+        border-color: var(--rose-deep);
+        background: var(--blush);
+        box-shadow: 0 0 0 1px var(--rose-deep) inset;
+      }
+      .svc-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 10px;
+      }
+      .svc-name {
+        font-family: var(--serif);
+        font-size: 17px;
+      }
+      .svc-check {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        flex: none;
+        display: grid;
+        place-items: center;
+        font-size: 11px;
+        color: transparent;
+        transition: 0.2s;
+      }
+      .svc-card.selected .svc-check {
+        background: var(--rose-deep);
+        border-color: var(--rose-deep);
+        color: #fff;
+      }
+      .svc-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 14px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .svc-price {
+        font-family: var(--serif);
+        font-size: 16px;
+        color: var(--ink);
+      }
 
-    /* step 2: date/time */
-    .field-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:10px}
-    .cal-toggle{
-      display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;
-      border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:.2s;flex:none
-    }
-    .cal-toggle:hover{border-color:var(--rose-deep);color:var(--rose-deep)}
-    .cal-toggle svg{width:14px;height:14px}
-    .date-field-wrap{position:relative;margin-bottom:34px}
-    .date-row{
-      display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;justify-content:flex-start;
-      scrollbar-width:none;-ms-overflow-style:none;
-      justify-content:center;flex-wrap:nowrap
-    }
-    .date-row::-webkit-scrollbar{display:none}
-    .date-chip{
-      flex:none;width:74px;padding:12px 4px;border:1px solid var(--line);background:#fff;text-align:center;cursor:pointer;transition:.2s
-    }
-    .date-chip .wd{display:block;font-size:11px;color:var(--muted)}
-    .date-chip .dd{display:block;font-family:var(--serif);font-size:15px;margin-top:6px;white-space:nowrap}
-    .date-chip:hover{border-color:var(--rose)}
-    .date-chip.selected{background:var(--rose-deep);border-color:var(--rose-deep)}
-    .date-chip.selected .wd,.date-chip.selected .dd{color:#fff}
+      /* step 2: date/time */
+      .field-label {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      .cal-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border: 1px solid var(--line);
+        background: #fff;
+        color: var(--ink);
+        cursor: pointer;
+        transition: 0.2s;
+        flex: none;
+      }
+      .cal-toggle:hover {
+        border-color: var(--rose-deep);
+        color: var(--rose-deep);
+      }
+      .cal-toggle svg {
+        width: 14px;
+        height: 14px;
+      }
+      .date-field-wrap {
+        position: relative;
+        margin-bottom: 34px;
+      }
+      .date-row {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 6px;
+        justify-content: flex-start;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        justify-content: center;
+        flex-wrap: nowrap;
+      }
+      .date-row::-webkit-scrollbar {
+        display: none;
+      }
+      .date-chip {
+        flex: none;
+        width: 74px;
+        padding: 12px 4px;
+        border: 1px solid var(--line);
+        background: #fff;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .date-chip .wd {
+        display: block;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .date-chip .dd {
+        display: block;
+        font-family: var(--serif);
+        font-size: 15px;
+        margin-top: 6px;
+        white-space: nowrap;
+      }
+      .date-chip:hover {
+        border-color: var(--rose);
+      }
+      .date-chip.selected {
+        background: var(--rose-deep);
+        border-color: var(--rose-deep);
+      }
+      .date-chip.selected .wd,
+      .date-chip.selected .dd {
+        color: #fff;
+      }
 
-    /* calendar popover */
-    .cal-popover{
-      position:absolute;top:calc(100% + 10px);right:50%;transform:translateX(50%);
-      width:min(300px,90vw);background:#fff;border:1px solid var(--line);box-shadow:0 20px 50px rgba(48,42,43,.14);
-      padding:18px;z-index:30;display:none
-    }
-    .cal-popover.open{display:block}
-    .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-    .cal-head button{
-      width:28px;height:28px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;
-      cursor:pointer;transition:.2s;font-size:13px;color:var(--ink)
-    }
-    .cal-head button:hover{border-color:var(--rose-deep);color:var(--rose-deep)}
-    .cal-head button:disabled{opacity:.3;pointer-events:none}
-    .cal-title{font-family:var(--serif);font-size:15px}
-    .cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px}
-    .cal-weekdays span{font-size:10px;color:var(--muted);text-align:center}
-    .cal-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
-    .cal-day{
-      aspect-ratio:1;display:grid;place-items:center;font-size:12.5px;cursor:pointer;
-      border:1px solid transparent;transition:.15s;color:var(--ink)
-    }
-    .cal-day:hover{border-color:var(--rose)}
-    .cal-day.disabled{color:#cfc4c4;pointer-events:none}
-    .cal-day.empty{pointer-events:none}
-    .cal-day.selected{background:var(--rose-deep);color:#fff}
-    .time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-    .time-chip{padding:12px 0;border:1px solid var(--line);background:#fff;text-align:center;cursor:pointer;font-size:13px;transition:.2s}
-    .time-chip:hover{border-color:var(--rose)}
-    .time-chip.selected{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff}
+      /* calendar popover */
+      .cal-popover {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 50%;
+        transform: translateX(50%);
+        width: min(300px, 90vw);
+        background: #fff;
+        border: 1px solid var(--line);
+        box-shadow: 0 20px 50px rgba(48, 42, 43, 0.14);
+        padding: 18px;
+        z-index: 30;
+        display: none;
+      }
+      .cal-popover.open {
+        display: block;
+      }
+      .cal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+      }
+      .cal-head button {
+        width: 28px;
+        height: 28px;
+        border: 1px solid var(--line);
+        background: #fff;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        transition: 0.2s;
+        font-size: 13px;
+        color: var(--ink);
+      }
+      .cal-head button:hover {
+        border-color: var(--rose-deep);
+        color: var(--rose-deep);
+      }
+      .cal-head button:disabled {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+      .cal-title {
+        font-family: var(--serif);
+        font-size: 15px;
+      }
+      .cal-weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        margin-bottom: 6px;
+      }
+      .cal-weekdays span {
+        font-size: 10px;
+        color: var(--muted);
+        text-align: center;
+      }
+      .cal-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+      }
+      .cal-day {
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+        font-size: 12.5px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: 0.15s;
+        color: var(--ink);
+      }
+      .cal-day:hover {
+        border-color: var(--rose);
+      }
+      .cal-day.disabled {
+        color: #cfc4c4;
+        pointer-events: none;
+      }
+      .cal-day.empty {
+        pointer-events: none;
+      }
+      .cal-day.selected {
+        background: var(--rose-deep);
+        color: #fff;
+      }
+      .time-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+      }
+      .time-chip {
+        padding: 12px 0;
+        border: 1px solid var(--line);
+        background: #fff;
+        text-align: center;
+        cursor: pointer;
+        font-size: 13px;
+        transition: 0.2s;
+      }
+      .time-chip:hover {
+        border-color: var(--rose);
+      }
+      .time-chip.selected {
+        background: var(--rose-deep);
+        border-color: var(--rose-deep);
+        color: #fff;
+      }
+      .time-chip.taken {
+        opacity: 0.35;
+        cursor: not-allowed;
+        text-decoration: line-through;
+      }
 
-    /* step 3: contact form */
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .form-field{display:flex;flex-direction:column;gap:8px}
-    .form-field.full{grid-column:1/-1}
-    .form-field label{font-size:12px;color:var(--muted)}
-    .form-field input,.form-field textarea{
-      border:1px solid var(--line);padding:13px 14px;background:#fff;color:var(--ink);outline:none;transition:.2s
-    }
-    .form-field input:focus,.form-field textarea:focus{border-color:var(--rose-deep)}
-    .form-field textarea{resize:vertical;min-height:90px}
-    .err{font-size:11px;color:#b23b3b;display:none}
-    .form-field.error input,.form-field.error textarea{border-color:#b23b3b}
-    .form-field.error .err{display:block}
+      /* step 3: contact form */
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .form-field.full {
+        grid-column: 1/-1;
+      }
+      .form-field label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .form-field input,
+      .form-field textarea {
+        border: 1px solid var(--line);
+        padding: 13px 14px;
+        background: #fff;
+        color: var(--ink);
+        outline: none;
+        transition: 0.2s;
+      }
+      .form-field input:focus,
+      .form-field textarea:focus {
+        border-color: var(--rose-deep);
+      }
+      .form-field textarea {
+        resize: vertical;
+        min-height: 90px;
+      }
+      .err {
+        font-size: 11px;
+        color: #b23b3b;
+        display: none;
+      }
+      .form-field.error input,
+      .form-field.error textarea {
+        border-color: #b23b3b;
+      }
+      .form-field.error .err {
+        display: block;
+      }
 
-    /* step 4: confirm */
-    .summary-card{border:1px solid var(--line);background:var(--cream);padding:30px}
-    .summary-row{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px solid var(--line)}
-    .summary-row:last-child{border-bottom:none}
-    .summary-row .k{font-size:12px;color:var(--muted)}
-    .summary-row .v{font-family:var(--serif);font-size:16px;text-align:left}
+      /* step 4: confirm */
+      .summary-card {
+        border: 1px solid var(--line);
+        background: var(--cream);
+        padding: 30px;
+      }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .summary-row:last-child {
+        border-bottom: none;
+      }
+      .summary-row .k {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .summary-row .v {
+        font-family: var(--serif);
+        font-size: 16px;
+        text-align: left;
+      }
 
-    .nav-buttons{display:flex;justify-content:space-between;gap:14px;margin-top:40px}
-    .nav-buttons .spacer{flex:1}
+      .nav-buttons {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        margin-top: 40px;
+      }
+      .nav-buttons .spacer {
+        flex: 1;
+      }
 
-    /* success state */
-    .success{display:none;text-align:center;padding:40px 0}
-    .success.active{display:block}
-    .success-icon{
-      width:70px;height:70px;border-radius:50%;background:var(--rose-deep);color:#fff;
-      display:grid;place-items:center;font-size:30px;margin:0 auto 26px
-    }
-    .success h2{font-size:26px;margin-bottom:12px}
-    .success p{max-width:400px;margin:0 auto}
-    .success .summary-card{margin:30px auto;max-width:440px;text-align:right}
-    .success .btn{margin-top:30px}
+      /* success state */
+      .success {
+        display: none;
+        text-align: center;
+        padding: 40px 0;
+      }
+      .success.active {
+        display: block;
+      }
+      .success-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: var(--rose-deep);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-size: 30px;
+        margin: 0 auto 26px;
+      }
+      .success h2 {
+        font-size: 26px;
+        margin-bottom: 12px;
+      }
+      .success p {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+      .success .summary-card {
+        margin: 30px auto;
+        max-width: 440px;
+        text-align: right;
+      }
+      .success .btn {
+        margin-top: 30px;
+      }
 
-    footer{background:#262123;color:#e9dfe0;padding:34px 0}
-    .footer-note{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9e9091;text-align:center}
+      footer {
+        background: #262123;
+        color: #e9dfe0;
+        padding: 34px 0;
+      }
+      .footer-note {
+        font-size: 9px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #9e9091;
+        text-align: center;
+      }
 
-    @media(max-width:620px){
-      .svc-grid{grid-template-columns:1fr}
-      .form-grid{grid-template-columns:1fr}
-      .time-grid{grid-template-columns:repeat(3,1fr)}
-      .step-label{display:none}
-      .page-head{padding:40px 0 0}
-      .steps-bar{padding:28px 0 4px}
-      .booking-wrap{padding:10px 0 70px}
-    }
-  </style>
-</head>
-<body>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="index.html">
-        <span class="brand-main">سونیا</span>
-        <span class="brand-sub">میکاپ آرتیست</span>
-      </a>
-      <a class="back-link" href="index.html">← بازگشت به صفحه اصلی</a>
-    </div>
-  </header>
-
-  <section class="page-head container">
-    <div class="eyebrow">رزرو آنلاین</div>
-    <h1>وقت خودت رو رزرو کن.</h1>
-    <p>در چهار مرحله‌ی ساده، خدمت، تاریخ و ساعت موردنظرت رو انتخاب کن؛ ما بقیه‌ش رو هماهنگ می‌کنیم.</p>
-  </section>
-
-  <section class="steps-bar container" id="stepsBar">
-    <div class="steps">
-      <div class="step active" data-step="1">
-        <div class="step-line"></div>
-        <div class="step-circle">۱</div>
-        <div class="step-label">انتخاب خدمت</div>
+      @media (max-width: 620px) {
+        .svc-grid {
+          grid-template-columns: 1fr;
+        }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .time-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .step-label {
+          display: none;
+        }
+        .page-head {
+          padding: 40px 0 0;
+        }
+        .steps-bar {
+          padding: 28px 0 4px;
+        }
+        .booking-wrap {
+          padding: 10px 0 70px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="brand" href="index.html">
+          <span class="brand-main">سونیا</span>
+          <span class="brand-sub">میکاپ آرتیست</span>
+        </a>
+        <a class="back-link" href="index.html">← بازگشت به صفحه اصلی</a>
       </div>
-      <div class="step" data-step="2">
-        <div class="step-line"></div>
-        <div class="step-circle">۲</div>
-        <div class="step-label">تاریخ و ساعت</div>
-      </div>
-      <div class="step" data-step="3">
-        <div class="step-line"></div>
-        <div class="step-circle">۳</div>
-        <div class="step-label">اطلاعات تماس</div>
-      </div>
-      <div class="step" data-step="4">
-        <div class="step-line"></div>
-        <div class="step-circle">۴</div>
-        <div class="step-label">تایید نهایی</div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <main class="booking-wrap container" id="bookingMain">
+    <section class="page-head container">
+      <div class="eyebrow">رزرو آنلاین</div>
+      <h1>وقت خودت رو رزرو کن.</h1>
+      <p>
+        در چهار مرحله‌ی ساده، خدمت، تاریخ و ساعت موردنظرت رو انتخاب کن؛ ما
+        بقیه‌ش رو هماهنگ می‌کنیم.
+      </p>
+    </section>
 
-    <!-- Step 1 -->
-    <div class="panel active" data-panel="1">
-      <div class="panel-head">
-        <div class="eyebrow">مرحله ۱ از ۴</div>
-        <h2>کدوم خدمت رو می‌خوای؟</h2>
-      </div>
-      <div class="svc-grid" id="svcGrid">
-        <div class="svc-card" data-name="میکاپ اختصاصی" data-price="۲,۵۰۰,۰۰۰ تومان" data-duration="۹۰ دقیقه">
-          <div class="svc-top"><div class="svc-name">میکاپ اختصاصی</div><div class="svc-check">✓</div></div>
-          <div class="svc-meta"><span>۹۰ دقیقه</span><span class="svc-price">۲,۵۰۰,۰۰۰ تومان</span></div>
+    <section class="steps-bar container" id="stepsBar">
+      <div class="steps">
+        <div class="step active" data-step="1">
+          <div class="step-line"></div>
+          <div class="step-circle">۱</div>
+          <div class="step-label">انتخاب خدمت</div>
         </div>
-        <div class="svc-card" data-name="میکاپ مراسم" data-price="۳,۵۰۰,۰۰۰ تومان" data-duration="۱۲۰ دقیقه">
-          <div class="svc-top"><div class="svc-name">میکاپ مراسم</div><div class="svc-check">✓</div></div>
-          <div class="svc-meta"><span>۱۲۰ دقیقه</span><span class="svc-price">۳,۵۰۰,۰۰۰ تومان</span></div>
+        <div class="step" data-step="2">
+          <div class="step-line"></div>
+          <div class="step-circle">۲</div>
+          <div class="step-label">تاریخ و ساعت</div>
         </div>
-        <div class="svc-card" data-name="میکاپ عروس" data-price="۷,۵۰۰,۰۰۰ تومان" data-duration="۱۵۰ دقیقه">
-          <div class="svc-top"><div class="svc-name">میکاپ عروس</div><div class="svc-check">✓</div></div>
-          <div class="svc-meta"><span>۱۵۰ دقیقه</span><span class="svc-price">۷,۵۰۰,۰۰۰ تومان</span></div>
+        <div class="step" data-step="3">
+          <div class="step-line"></div>
+          <div class="step-circle">۳</div>
+          <div class="step-label">اطلاعات تماس</div>
         </div>
-        <div class="svc-card" data-name="میکاپ ادیتوریال / عکاسی" data-price="۴,۵۰۰,۰۰۰ تومان" data-duration="۱۲۰ دقیقه">
-          <div class="svc-top"><div class="svc-name">میکاپ ادیتوریال / عکاسی</div><div class="svc-check">✓</div></div>
-          <div class="svc-meta"><span>۱۲۰ دقیقه</span><span class="svc-price">۴,۵۰۰,۰۰۰ تومان</span></div>
-        </div>
-        <div class="svc-card" data-name="آموزش خصوصی میکاپ" data-price="۳,۰۰۰,۰۰۰ تومان" data-duration="۹۰ دقیقه">
-          <div class="svc-top"><div class="svc-name">آموزش خصوصی میکاپ</div><div class="svc-check">✓</div></div>
-          <div class="svc-meta"><span>۹۰ دقیقه</span><span class="svc-price">۳,۰۰۰,۰۰۰ تومان</span></div>
-        </div>
-        <div class="svc-card" data-name="میکاپ در محل" data-price="از ۵,۵۰۰,۰۰۰ تومان" data-duration="با هماهنگی">
-          <div class="svc-top"><div class="svc-name">میکاپ در محل</div><div class="svc-check">✓</div></div>
-          <div class="svc-meta"><span>با هماهنگی</span><span class="svc-price">از ۵,۵۰۰,۰۰۰ تومان</span></div>
+        <div class="step" data-step="4">
+          <div class="step-line"></div>
+          <div class="step-circle">۴</div>
+          <div class="step-label">تایید نهایی</div>
         </div>
       </div>
-      <div class="nav-buttons">
-        <span class="spacer"></span>
-        <button class="btn primary" id="toStep2" disabled>مرحله بعد</button>
-      </div>
-    </div>
+    </section>
 
-    <!-- Step 2 -->
-    <div class="panel" data-panel="2">
-      <div class="panel-head">
-        <div class="eyebrow">مرحله ۲ از ۴</div>
-        <h2>چه روز و ساعتی؟</h2>
-      </div>
-      <div class="field-label">
-        <span>تاریخ</span>
-        <button type="button" class="cal-toggle" id="calToggle" aria-label="نمایش تقویم شمسی">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="1.5"/><path d="M3 9.5h18"/><path d="M8 3v4M16 3v4"/></svg>
-        </button>
-      </div>
-      <div class="date-field-wrap">
-        <div class="date-row" id="dateRow"></div>
-        <div class="cal-popover" id="calPopover">
-          <div class="cal-head">
-            <button type="button" id="calPrev">‹</button>
-            <div class="cal-title" id="calTitle">—</div>
-            <button type="button" id="calNext">›</button>
+    <main class="booking-wrap container" id="bookingMain">
+      <!-- Step 1 -->
+      <div class="panel active" data-panel="1">
+        <div class="panel-head">
+          <div class="eyebrow">مرحله ۱ از ۴</div>
+          <h2>کدوم خدمت رو می‌خوای؟</h2>
+        </div>
+        <div class="svc-grid" id="svcGrid">
+          <div
+            class="svc-card"
+            data-name="میکاپ اختصاصی"
+            data-price="۲,۵۰۰,۰۰۰ تومان"
+            data-duration="۹۰ دقیقه"
+            data-minutes="90"
+          >
+            <div class="svc-top">
+              <div class="svc-name">میکاپ اختصاصی</div>
+              <div class="svc-check">✓</div>
+            </div>
+            <div class="svc-meta">
+              <span>۹۰ دقیقه</span
+              ><span class="svc-price">۲,۵۰۰,۰۰۰ تومان</span>
+            </div>
           </div>
-          <div class="cal-weekdays" id="calWeekdays"></div>
-          <div class="cal-days" id="calDays"></div>
+          <div
+            class="svc-card"
+            data-name="میکاپ مراسم"
+            data-price="۳,۵۰۰,۰۰۰ تومان"
+            data-duration="۱۲۰ دقیقه"
+            data-minutes="120"
+          >
+            <div class="svc-top">
+              <div class="svc-name">میکاپ مراسم</div>
+              <div class="svc-check">✓</div>
+            </div>
+            <div class="svc-meta">
+              <span>۱۲۰ دقیقه</span
+              ><span class="svc-price">۳,۵۰۰,۰۰۰ تومان</span>
+            </div>
+          </div>
+          <div
+            class="svc-card"
+            data-name="میکاپ عروس"
+            data-price="۷,۵۰۰,۰۰۰ تومان"
+            data-duration="۱۵۰ دقیقه"
+            data-minutes="150"
+          >
+            <div class="svc-top">
+              <div class="svc-name">میکاپ عروس</div>
+              <div class="svc-check">✓</div>
+            </div>
+            <div class="svc-meta">
+              <span>۱۵۰ دقیقه</span
+              ><span class="svc-price">۷,۵۰۰,۰۰۰ تومان</span>
+            </div>
+          </div>
+          <div
+            class="svc-card"
+            data-name="میکاپ ادیتوریال / عکاسی"
+            data-price="۴,۵۰۰,۰۰۰ تومان"
+            data-duration="۱۲۰ دقیقه"
+            data-minutes="120"
+          >
+            <div class="svc-top">
+              <div class="svc-name">میکاپ ادیتوریال / عکاسی</div>
+              <div class="svc-check">✓</div>
+            </div>
+            <div class="svc-meta">
+              <span>۱۲۰ دقیقه</span
+              ><span class="svc-price">۴,۵۰۰,۰۰۰ تومان</span>
+            </div>
+          </div>
+          <div
+            class="svc-card"
+            data-name="آموزش خصوصی میکاپ"
+            data-price="۳,۰۰۰,۰۰۰ تومان"
+            data-duration="۹۰ دقیقه"
+            data-minutes="90"
+          >
+            <div class="svc-top">
+              <div class="svc-name">آموزش خصوصی میکاپ</div>
+              <div class="svc-check">✓</div>
+            </div>
+            <div class="svc-meta">
+              <span>۹۰ دقیقه</span
+              ><span class="svc-price">۳,۰۰۰,۰۰۰ تومان</span>
+            </div>
+          </div>
+          <div
+            class="svc-card"
+            data-name="میکاپ در محل"
+            data-price="از ۵,۵۰۰,۰۰۰ تومان"
+            data-duration="با هماهنگی"
+            data-minutes="90"
+          >
+            <div class="svc-top">
+              <div class="svc-name">میکاپ در محل</div>
+              <div class="svc-check">✓</div>
+            </div>
+            <div class="svc-meta">
+              <span>با هماهنگی</span
+              ><span class="svc-price">از ۵,۵۰۰,۰۰۰ تومان</span>
+            </div>
+          </div>
+        </div>
+        <div class="nav-buttons">
+          <span class="spacer"></span>
+          <button class="btn primary" id="toStep2" disabled>مرحله بعد</button>
         </div>
       </div>
-      <div class="field-label">ساعت</div>
-      <div class="time-grid" id="timeGrid"></div>
-      <div class="nav-buttons">
-        <button class="btn light" id="backTo1">مرحله قبل</button>
-        <button class="btn primary" id="toStep3" disabled>مرحله بعد</button>
-      </div>
-    </div>
 
-    <!-- Step 3 -->
-    <div class="panel" data-panel="3">
-      <div class="panel-head">
-        <div class="eyebrow">مرحله ۳ از ۴</div>
-        <h2>اطلاعات تماس</h2>
-      </div>
-      <div class="form-grid">
-        <div class="form-field" id="fName">
-          <label>نام و نام‌خانوادگی</label>
-          <input type="text" id="inpName" placeholder="مثلاً سارا محمدی">
-          <span class="err">لطفاً نام خودت رو وارد کن.</span>
+      <!-- Step 2 -->
+      <div class="panel" data-panel="2">
+        <div class="panel-head">
+          <div class="eyebrow">مرحله ۲ از ۴</div>
+          <h2>چه روز و ساعتی؟</h2>
         </div>
-        <div class="form-field" id="fPhone">
-          <label>شماره تماس</label>
-          <input type="tel" id="inpPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹">
-          <span class="err">لطفاً یک شماره تماس معتبر وارد کن.</span>
+        <div class="field-label">
+          <span>تاریخ</span>
+          <button
+            type="button"
+            class="cal-toggle"
+            id="calToggle"
+            aria-label="نمایش تقویم شمسی"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+            >
+              <rect x="3" y="5" width="18" height="16" rx="1.5" />
+              <path d="M3 9.5h18" />
+              <path d="M8 3v4M16 3v4" />
+            </svg>
+          </button>
         </div>
-        <div class="form-field full">
-          <label>ایمیل (اختیاری)</label>
-          <input type="email" id="inpEmail" placeholder="example@email.com">
+        <div class="date-field-wrap">
+          <div class="date-row" id="dateRow"></div>
+          <div class="cal-popover" id="calPopover">
+            <div class="cal-head">
+              <button type="button" id="calPrev">‹</button>
+              <div class="cal-title" id="calTitle">—</div>
+              <button type="button" id="calNext">›</button>
+            </div>
+            <div class="cal-weekdays" id="calWeekdays"></div>
+            <div class="cal-days" id="calDays"></div>
+          </div>
         </div>
-        <div class="form-field full">
-          <label>توضیحات یا حساسیت‌های پوستی (اختیاری)</label>
-          <textarea id="inpNotes" placeholder="مثلاً نوع پوست، حساسیت به برند خاص، یا سبک موردنظرت..."></textarea>
+        <div class="field-label">ساعت</div>
+        <div class="time-grid" id="timeGrid"></div>
+        <div class="nav-buttons">
+          <button class="btn light" id="backTo1">مرحله قبل</button>
+          <button class="btn primary" id="toStep3" disabled>مرحله بعد</button>
         </div>
       </div>
-      <div class="nav-buttons">
-        <button class="btn light" id="backTo2">مرحله قبل</button>
-        <button class="btn primary" id="toStep4">مرحله بعد</button>
+
+      <!-- Step 3 -->
+      <div class="panel" data-panel="3">
+        <div class="panel-head">
+          <div class="eyebrow">مرحله ۳ از ۴</div>
+          <h2>اطلاعات تماس</h2>
+        </div>
+        <div class="form-grid">
+          <div class="form-field" id="fName">
+            <label>نام و نام‌خانوادگی</label>
+            <input type="text" id="inpName" placeholder="مثلاً سارا محمدی" />
+            <span class="err">لطفاً نام خودت رو وارد کن.</span>
+          </div>
+          <div class="form-field" id="fPhone">
+            <label>شماره تماس</label>
+            <input type="tel" id="inpPhone" placeholder="۰۹۱۲۳۴۵۶۷۸۹" />
+            <span class="err">لطفاً یک شماره تماس معتبر وارد کن.</span>
+          </div>
+          <div class="form-field full">
+            <label>ایمیل (اختیاری)</label>
+            <input type="email" id="inpEmail" placeholder="example@email.com" />
+          </div>
+          <div class="form-field full">
+            <label>توضیحات یا حساسیت‌های پوستی (اختیاری)</label>
+            <textarea
+              id="inpNotes"
+              placeholder="مثلاً نوع پوست، حساسیت به برند خاص، یا سبک موردنظرت..."
+            ></textarea>
+          </div>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn light" id="backTo2">مرحله قبل</button>
+          <button class="btn primary" id="toStep4">مرحله بعد</button>
+        </div>
       </div>
-    </div>
 
-    <!-- Step 4 -->
-    <div class="panel" data-panel="4">
-      <div class="panel-head">
-        <div class="eyebrow">مرحله ۴ از ۴</div>
-        <h2>بازبینی و تایید نهایی</h2>
+      <!-- Step 4 -->
+      <div class="panel" data-panel="4">
+        <div class="panel-head">
+          <div class="eyebrow">مرحله ۴ از ۴</div>
+          <h2>بازبینی و تایید نهایی</h2>
+        </div>
+        <div class="summary-card">
+          <div class="summary-row">
+            <span class="k">خدمت</span><span class="v" id="sumService">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="k">مدت زمان</span
+            ><span class="v" id="sumDuration">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="k">تاریخ و ساعت</span
+            ><span class="v" id="sumDateTime">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="k">نام</span><span class="v" id="sumName">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="k">تماس</span><span class="v" id="sumPhone">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="k">هزینه تقریبی</span
+            ><span class="v" id="sumPrice">—</span>
+          </div>
+        </div>
+        <div class="nav-buttons">
+          <button class="btn light" id="backTo3">مرحله قبل</button>
+          <button class="btn primary" id="confirmBooking">
+            تایید نهایی رزرو
+          </button>
+        </div>
       </div>
-      <div class="summary-card">
-        <div class="summary-row"><span class="k">خدمت</span><span class="v" id="sumService">—</span></div>
-        <div class="summary-row"><span class="k">مدت زمان</span><span class="v" id="sumDuration">—</span></div>
-        <div class="summary-row"><span class="k">تاریخ و ساعت</span><span class="v" id="sumDateTime">—</span></div>
-        <div class="summary-row"><span class="k">نام</span><span class="v" id="sumName">—</span></div>
-        <div class="summary-row"><span class="k">تماس</span><span class="v" id="sumPhone">—</span></div>
-        <div class="summary-row"><span class="k">هزینه تقریبی</span><span class="v" id="sumPrice">—</span></div>
+
+      <!-- Success -->
+      <div class="success" id="successPanel">
+        <div class="success-icon">✓</div>
+        <h2>رزرو شما ثبت شد.</h2>
+        <p>
+          خلاصه‌ی نوبتت رو پایین می‌بینی. به‌زودی برای هماهنگی نهایی باهات تماس
+          گرفته می‌شه.
+        </p>
+        <div class="summary-card">
+          <div class="summary-row">
+            <span class="k">خدمت</span><span class="v" id="sumService2">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="k">تاریخ و ساعت</span
+            ><span class="v" id="sumDateTime2">—</span>
+          </div>
+          <div class="summary-row">
+            <span class="k">نام</span><span class="v" id="sumName2">—</span>
+          </div>
+        </div>
+        <a class="btn primary" href="index.html">بازگشت به صفحه اصلی</a>
       </div>
-      <div class="nav-buttons">
-        <button class="btn light" id="backTo3">مرحله قبل</button>
-        <button class="btn primary" id="confirmBooking">تایید نهایی رزرو</button>
+    </main>
+
+    <footer>
+      <div class="container footer-note">
+        © 2026 سونیا میکاپ آرتیست · تمامی حقوق محفوظ است
       </div>
-    </div>
+    </footer>
 
-    <!-- Success -->
-    <div class="success" id="successPanel">
-      <div class="success-icon">✓</div>
-      <h2>رزرو شما ثبت شد.</h2>
-      <p>خلاصه‌ی نوبتت رو پایین می‌بینی. به‌زودی برای هماهنگی نهایی باهات تماس گرفته می‌شه.</p>
-      <div class="summary-card">
-        <div class="summary-row"><span class="k">خدمت</span><span class="v" id="sumService2">—</span></div>
-        <div class="summary-row"><span class="k">تاریخ و ساعت</span><span class="v" id="sumDateTime2">—</span></div>
-        <div class="summary-row"><span class="k">نام</span><span class="v" id="sumName2">—</span></div>
-      </div>
-      <a class="btn primary" href="index.html">بازگشت به صفحه اصلی</a>
-    </div>
+    <script>
+      var state = {
+        service: null,
+        duration: null,
+        minutes: 90,
+        price: null,
+        date: null,
+        dateObj: null,
+        time: null,
+        timeValue: null,
+        name: null,
+        phone: null,
+      };
+      var currentStep = 1;
+      var sb = window.supabase.createClient(
+        "https://ebznilmeaapienmytmsz.supabase.co",
+        "sb_publishable_Pv5AZFjGgd2JIgjyQt6eOA_IXTFokPu",
+      );
 
-  </main>
-
-  <footer>
-    <div class="container footer-note">© 2026 سونیا میکاپ آرتیست · تمامی حقوق محفوظ است</div>
-  </footer>
-
-  <script>
-    var state = { service:null, duration:null, price:null, date:null, dateObj:null, time:null, name:null, phone:null };
-    var currentStep = 1;
-
-    function goToStep(n){
-      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
-      document.querySelector('.panel[data-panel="'+n+'"]').classList.add('active');
-      document.querySelectorAll('.step').forEach(function(s){
-        var sn = parseInt(s.getAttribute('data-step'), 10);
-        s.classList.remove('active','done');
-        if(sn === n) s.classList.add('active');
-        else if(sn < n) s.classList.add('done');
-      });
-      currentStep = n;
-      document.getElementById('stepsBar').scrollIntoView({behavior:'smooth', block:'start'});
-    }
-
-    // Step 1: services
-    var svcCards = document.querySelectorAll('.svc-card');
-    svcCards.forEach(function(card){
-      card.addEventListener('click', function(){
-        svcCards.forEach(function(c){ c.classList.remove('selected'); });
-        card.classList.add('selected');
-        state.service = card.getAttribute('data-name');
-        state.duration = card.getAttribute('data-duration');
-        state.price = card.getAttribute('data-price');
-        document.getElementById('toStep2').disabled = false;
-      });
-    });
-    document.getElementById('toStep2').addEventListener('click', function(){ goToStep(2); });
-
-    // Step 2: date/time
-    var dateRow = document.getElementById('dateRow');
-    var timeGrid = document.getElementById('timeGrid');
-    var timeSlots = ['۱۰:۰۰','۱۱:۰۰','۱۲:۳۰','۱۴:۰۰','۱۵:۳۰','۱۷:۰۰','۱۸:۳۰','۲۰:۰۰'];
-    var BOOKING_WINDOW_DAYS = 30;
-
-    var wdFmt = new Intl.DateTimeFormat('fa-IR-u-ca-persian', { weekday: 'long' });
-    var ddFmt = new Intl.DateTimeFormat('fa-IR-u-ca-persian', { day: 'numeric' });
-    var mmFmt = new Intl.DateTimeFormat('fa-IR-u-ca-persian', { month: 'long' });
-    var yyFmt = new Intl.DateTimeFormat('fa-IR-u-ca-persian', { year: 'numeric' });
-    var faDigitMap = {'۰':'0','۱':'1','۲':'2','۳':'3','۴':'4','۵':'5','۶':'6','۷':'7','۸':'8','۹':'9'};
-    function faToInt(s){ return parseInt(String(s).replace(/[۰-۹]/g, function(d){ return faDigitMap[d]; }), 10); }
-
-    var today = new Date(); today.setHours(0,0,0,0);
-    var minDate = new Date(today); minDate.setDate(minDate.getDate() + 1);
-    var maxDate = new Date(today); maxDate.setDate(maxDate.getDate() + BOOKING_WINDOW_DAYS);
-
-    function sameDay(a,b){ return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
-    function inRange(d){ return d >= minDate && d <= maxDate; }
-    function labelFor(d){ return wdFmt.format(d) + ' — ' + ddFmt.format(d) + ' ' + mmFmt.format(d); }
-
-    var chipByTime = {};
-    for(var i=1; i<=BOOKING_WINDOW_DAYS; i++){
-      (function(i){
-        var d = new Date(today); d.setDate(d.getDate() + i);
-        var chip = document.createElement('div');
-        chip.className = 'date-chip';
-        chip.innerHTML = '<span class="wd">'+wdFmt.format(d)+'</span><span class="dd">'+ddFmt.format(d)+' '+mmFmt.format(d)+'</span>';
-        chip.addEventListener('click', function(){ selectDate(d, chip); });
-        dateRow.appendChild(chip);
-        chipByTime[d.getTime()] = chip;
-      })(i);
-    }
-
-    function selectDate(d, chipEl){
-      document.querySelectorAll('.date-chip').forEach(function(c){ c.classList.remove('selected'); });
-      if(!chipEl){ chipEl = chipByTime[d.getTime()]; }
-      if(chipEl){
-        chipEl.classList.add('selected');
-        chipEl.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+      function goToStep(n) {
+        document.querySelectorAll(".panel").forEach(function (p) {
+          p.classList.remove("active");
+        });
+        document
+          .querySelector('.panel[data-panel="' + n + '"]')
+          .classList.add("active");
+        document.querySelectorAll(".step").forEach(function (s) {
+          var sn = parseInt(s.getAttribute("data-step"), 10);
+          s.classList.remove("active", "done");
+          if (sn === n) s.classList.add("active");
+          else if (sn < n) s.classList.add("done");
+        });
+        currentStep = n;
+        document
+          .getElementById("stepsBar")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
       }
-      state.date = labelFor(d);
-      state.dateObj = d;
-      checkStep2();
-      renderCalendarDays();
-    }
 
-    timeSlots.forEach(function(t){
-      var chip = document.createElement('div');
-      chip.className = 'time-chip';
-      chip.textContent = t;
-      chip.addEventListener('click', function(){
-        document.querySelectorAll('.time-chip').forEach(function(c){ c.classList.remove('selected'); });
-        chip.classList.add('selected');
-        state.time = t;
-        checkStep2();
-      });
-      timeGrid.appendChild(chip);
-    });
-
-    function checkStep2(){
-      document.getElementById('toStep3').disabled = !(state.date && state.time);
-    }
-
-    // Calendar popover (Persian/Jalali month grid, via Intl persian calendar)
-    var calToggle = document.getElementById('calToggle');
-    var calPopover = document.getElementById('calPopover');
-    var calTitle = document.getElementById('calTitle');
-    var calWeekdays = document.getElementById('calWeekdays');
-    var calDays = document.getElementById('calDays');
-    var calPrev = document.getElementById('calPrev');
-    var calNext = document.getElementById('calNext');
-    var weekdayOrder = ['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
-    var weekdayShort = ['ش','ی','د','س','چ','پ','ج'];
-
-    function findMonthStart(baseDate){
-      var d = new Date(baseDate);
-      while(faToInt(ddFmt.format(d)) !== 1){ d.setDate(d.getDate() - 1); }
-      d.setHours(0,0,0,0);
-      return d;
-    }
-    function getMonthLength(monthStart){
-      var d = new Date(monthStart), count = 0;
-      while(true){
-        count++;
-        var next = new Date(d); next.setDate(next.getDate() + 1);
-        if(faToInt(ddFmt.format(next)) === 1) break;
-        d = next;
-      }
-      return count;
-    }
-    function weekdayIndex(d){ return weekdayOrder.indexOf(wdFmt.format(d)); }
-
-    var calMonthStart = findMonthStart(today);
-    var firstAllowedMonthStart = calMonthStart;
-    var lastAllowedMonthStart = findMonthStart(maxDate);
-
-    calWeekdays.innerHTML = weekdayShort.map(function(w){ return '<span>'+w+'</span>'; }).join('');
-
-    function renderCalendarDays(){
-      calTitle.textContent = mmFmt.format(calMonthStart) + ' ' + yyFmt.format(calMonthStart);
-      calPrev.disabled = sameDay(calMonthStart, firstAllowedMonthStart);
-      calNext.disabled = sameDay(calMonthStart, lastAllowedMonthStart);
-
-      var len = getMonthLength(calMonthStart);
-      var leading = weekdayIndex(calMonthStart);
-      var html = '';
-      for(var e=0; e<leading; e++){ html += '<div class="cal-day empty"></div>'; }
-      for(var day=1; day<=len; day++){
-        var d = new Date(calMonthStart); d.setDate(d.getDate() + (day - 1));
-        var disabled = !inRange(d);
-        var isSel = state.dateObj && sameDay(d, state.dateObj);
-        html += '<div class="cal-day'+(disabled?' disabled':'')+(isSel?' selected':'')+'" data-t="'+d.getTime()+'">'+ddFmt.format(d)+'</div>';
-      }
-      calDays.innerHTML = html;
-      calDays.querySelectorAll('.cal-day:not(.disabled):not(.empty)').forEach(function(cell){
-        cell.addEventListener('click', function(){
-          var d = new Date(parseInt(cell.getAttribute('data-t'), 10));
-          selectDate(d);
-          calPopover.classList.remove('open');
+      // Step 1: services
+      var svcCards = document.querySelectorAll(".svc-card");
+      svcCards.forEach(function (card) {
+        card.addEventListener("click", function () {
+          svcCards.forEach(function (c) {
+            c.classList.remove("selected");
+          });
+          card.classList.add("selected");
+          state.service = card.getAttribute("data-name");
+          state.duration = card.getAttribute("data-duration");
+          state.minutes = parseInt(card.getAttribute("data-minutes"), 10) || 90;
+          state.price = card.getAttribute("data-price");
+          document.getElementById("toStep2").disabled = false;
         });
       });
-    }
-    renderCalendarDays();
+      document.getElementById("toStep2").addEventListener("click", function () {
+        goToStep(2);
+      });
 
-    calPrev.addEventListener('click', function(){
-      var prevStart = findMonthStart(new Date(calMonthStart.getTime() - 86400000));
-      if(prevStart >= firstAllowedMonthStart){ calMonthStart = prevStart; renderCalendarDays(); }
-    });
-    calNext.addEventListener('click', function(){
-      var len = getMonthLength(calMonthStart);
-      var nextStart = new Date(calMonthStart); nextStart.setDate(nextStart.getDate() + len);
-      if(nextStart <= lastAllowedMonthStart){ calMonthStart = nextStart; renderCalendarDays(); }
-    });
-    calToggle.addEventListener('click', function(e){
-      e.stopPropagation();
-      calPopover.classList.toggle('open');
-    });
-    document.addEventListener('click', function(e){
-      if(!calPopover.contains(e.target) && e.target !== calToggle){ calPopover.classList.remove('open'); }
-    });
+      // Step 2: date/time
+      var dateRow = document.getElementById("dateRow");
+      var timeGrid = document.getElementById("timeGrid");
+      var timeSlots = [
+        { label: "۱۰:۰۰", value: "10:00" },
+        { label: "۱۱:۰۰", value: "11:00" },
+        { label: "۱۲:۳۰", value: "12:30" },
+        { label: "۱۴:۰۰", value: "14:00" },
+        { label: "۱۵:۳۰", value: "15:30" },
+        { label: "۱۷:۰۰", value: "17:00" },
+        { label: "۱۸:۳۰", value: "18:30" },
+        { label: "۲۰:۰۰", value: "20:00" },
+      ];
+      var BOOKING_WINDOW_DAYS = 30;
 
-    document.getElementById('backTo1').addEventListener('click', function(){ goToStep(1); });
-    document.getElementById('toStep3').addEventListener('click', function(){ goToStep(3); });
+      var wdFmt = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+        weekday: "long",
+      });
+      var ddFmt = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+        day: "numeric",
+      });
+      var mmFmt = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+        month: "long",
+      });
+      var yyFmt = new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+        year: "numeric",
+      });
+      var faDigitMap = {
+        "۰": "0",
+        "۱": "1",
+        "۲": "2",
+        "۳": "3",
+        "۴": "4",
+        "۵": "5",
+        "۶": "6",
+        "۷": "7",
+        "۸": "8",
+        "۹": "9",
+      };
+      function faToInt(s) {
+        return parseInt(
+          String(s).replace(/[۰-۹]/g, function (d) {
+            return faDigitMap[d];
+          }),
+          10,
+        );
+      }
 
-    // Step 3: contact
-    document.getElementById('backTo2').addEventListener('click', function(){ goToStep(2); });
-    document.getElementById('toStep4').addEventListener('click', function(){
-      var name = document.getElementById('inpName').value.trim();
-      var phone = document.getElementById('inpPhone').value.trim();
-      var nameField = document.getElementById('fName');
-      var phoneField = document.getElementById('fPhone');
-      var valid = true;
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+      var minDate = new Date(today);
+      minDate.setDate(minDate.getDate() + 1);
+      var maxDate = new Date(today);
+      maxDate.setDate(maxDate.getDate() + BOOKING_WINDOW_DAYS);
 
-      if(name.length < 2){ nameField.classList.add('error'); valid = false; }
-      else { nameField.classList.remove('error'); }
+      function sameDay(a, b) {
+        return (
+          a.getFullYear() === b.getFullYear() &&
+          a.getMonth() === b.getMonth() &&
+          a.getDate() === b.getDate()
+        );
+      }
+      function inRange(d) {
+        return d >= minDate && d <= maxDate;
+      }
+      function labelFor(d) {
+        return (
+          wdFmt.format(d) + " — " + ddFmt.format(d) + " " + mmFmt.format(d)
+        );
+      }
+      function toIsoDate(d) {
+        var y = d.getFullYear(),
+          m = String(d.getMonth() + 1).padStart(2, "0"),
+          day = String(d.getDate()).padStart(2, "0");
+        return y + "-" + m + "-" + day;
+      }
 
-      var phoneOk = /^0?9\d{9}$/.test(phone.replace(/\s|-/g,''));
-      if(!phoneOk){ phoneField.classList.add('error'); valid = false; }
-      else { phoneField.classList.remove('error'); }
+      var chipByTime = {};
+      for (var i = 1; i <= BOOKING_WINDOW_DAYS; i++) {
+        (function (i) {
+          var d = new Date(today);
+          d.setDate(d.getDate() + i);
+          var chip = document.createElement("div");
+          chip.className = "date-chip";
+          chip.innerHTML =
+            '<span class="wd">' +
+            wdFmt.format(d) +
+            '</span><span class="dd">' +
+            ddFmt.format(d) +
+            " " +
+            mmFmt.format(d) +
+            "</span>";
+          chip.addEventListener("click", function () {
+            selectDate(d, chip);
+          });
+          dateRow.appendChild(chip);
+          chipByTime[d.getTime()] = chip;
+        })(i);
+      }
 
-      if(!valid) return;
+      function selectDate(d, chipEl) {
+        document.querySelectorAll(".date-chip").forEach(function (c) {
+          c.classList.remove("selected");
+        });
+        if (!chipEl) {
+          chipEl = chipByTime[d.getTime()];
+        }
+        if (chipEl) {
+          chipEl.classList.add("selected");
+          chipEl.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center",
+          });
+        }
+        state.date = labelFor(d);
+        state.dateObj = d;
+        state.time = null;
+        state.timeValue = null;
+        checkStep2();
+        renderCalendarDays();
+        loadTakenTimesForDay(d);
+      }
 
-      state.name = name;
-      state.phone = phone;
+      var takenTimes = new Set();
+      async function loadTakenTimesForDay(d) {
+        var iso = toIsoDate(d);
+        takenTimes = new Set();
+        renderTimeGrid();
+        try {
+          var res = await sb.rpc("get_taken_slots", { p_date: iso });
+          if (res.error) {
+            console.error(res.error);
+            return;
+          }
+          takenTimes = new Set(
+            (res.data || []).map(function (r) {
+              return r.booking_time.slice(0, 5);
+            }),
+          );
+        } catch (err) {
+          console.error(err);
+        }
+        renderTimeGrid();
+      }
 
-      document.getElementById('sumService').textContent = state.service;
-      document.getElementById('sumDuration').textContent = state.duration;
-      document.getElementById('sumDateTime').textContent = state.date + ' — ساعت ' + state.time;
-      document.getElementById('sumName').textContent = state.name;
-      document.getElementById('sumPhone').textContent = state.phone;
-      document.getElementById('sumPrice').textContent = state.price;
+      function renderTimeGrid() {
+        timeGrid.innerHTML = "";
+        timeSlots.forEach(function (t) {
+          var isTaken = takenTimes.has(t.value);
+          var chip = document.createElement("div");
+          chip.className =
+            "time-chip" +
+            (isTaken ? " taken" : "") +
+            (state.timeValue === t.value ? " selected" : "");
+          chip.textContent = t.label;
+          if (isTaken) {
+            chip.setAttribute("aria-disabled", "true");
+          } else {
+            chip.addEventListener("click", function () {
+              document.querySelectorAll(".time-chip").forEach(function (c) {
+                c.classList.remove("selected");
+              });
+              chip.classList.add("selected");
+              state.time = t.label;
+              state.timeValue = t.value;
+              checkStep2();
+            });
+          }
+          timeGrid.appendChild(chip);
+        });
+      }
+      renderTimeGrid();
 
-      goToStep(4);
-    });
+      function checkStep2() {
+        document.getElementById("toStep3").disabled = !(
+          state.date && state.time
+        );
+      }
 
-    document.getElementById('backTo3').addEventListener('click', function(){ goToStep(3); });
+      // Calendar popover (Persian/Jalali month grid, via Intl persian calendar)
+      var calToggle = document.getElementById("calToggle");
+      var calPopover = document.getElementById("calPopover");
+      var calTitle = document.getElementById("calTitle");
+      var calWeekdays = document.getElementById("calWeekdays");
+      var calDays = document.getElementById("calDays");
+      var calPrev = document.getElementById("calPrev");
+      var calNext = document.getElementById("calNext");
+      var weekdayOrder = [
+        "شنبه",
+        "یکشنبه",
+        "دوشنبه",
+        "سه‌شنبه",
+        "چهارشنبه",
+        "پنجشنبه",
+        "جمعه",
+      ];
+      var weekdayShort = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 
-    // Step 4: confirm
-    document.getElementById('confirmBooking').addEventListener('click', function(){
-      document.getElementById('bookingMain').querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
-      document.getElementById('stepsBar').style.display = 'none';
-      document.getElementById('sumService2').textContent = state.service;
-      document.getElementById('sumDateTime2').textContent = state.date + ' — ساعت ' + state.time;
-      document.getElementById('sumName2').textContent = state.name;
-      document.getElementById('successPanel').classList.add('active');
-      window.scrollTo({top:0, behavior:'smooth'});
-    });
-  </script>
-</body>
+      function findMonthStart(baseDate) {
+        var d = new Date(baseDate);
+        while (faToInt(ddFmt.format(d)) !== 1) {
+          d.setDate(d.getDate() - 1);
+        }
+        d.setHours(0, 0, 0, 0);
+        return d;
+      }
+      function getMonthLength(monthStart) {
+        var d = new Date(monthStart),
+          count = 0;
+        while (true) {
+          count++;
+          var next = new Date(d);
+          next.setDate(next.getDate() + 1);
+          if (faToInt(ddFmt.format(next)) === 1) break;
+          d = next;
+        }
+        return count;
+      }
+      function weekdayIndex(d) {
+        return weekdayOrder.indexOf(wdFmt.format(d));
+      }
+
+      var calMonthStart = findMonthStart(today);
+      var firstAllowedMonthStart = calMonthStart;
+      var lastAllowedMonthStart = findMonthStart(maxDate);
+
+      calWeekdays.innerHTML = weekdayShort
+        .map(function (w) {
+          return "<span>" + w + "</span>";
+        })
+        .join("");
+
+      function renderCalendarDays() {
+        calTitle.textContent =
+          mmFmt.format(calMonthStart) + " " + yyFmt.format(calMonthStart);
+        calPrev.disabled = sameDay(calMonthStart, firstAllowedMonthStart);
+        calNext.disabled = sameDay(calMonthStart, lastAllowedMonthStart);
+
+        var len = getMonthLength(calMonthStart);
+        var leading = weekdayIndex(calMonthStart);
+        var html = "";
+        for (var e = 0; e < leading; e++) {
+          html += '<div class="cal-day empty"></div>';
+        }
+        for (var day = 1; day <= len; day++) {
+          var d = new Date(calMonthStart);
+          d.setDate(d.getDate() + (day - 1));
+          var disabled = !inRange(d);
+          var isSel = state.dateObj && sameDay(d, state.dateObj);
+          html +=
+            '<div class="cal-day' +
+            (disabled ? " disabled" : "") +
+            (isSel ? " selected" : "") +
+            '" data-t="' +
+            d.getTime() +
+            '">' +
+            ddFmt.format(d) +
+            "</div>";
+        }
+        calDays.innerHTML = html;
+        calDays
+          .querySelectorAll(".cal-day:not(.disabled):not(.empty)")
+          .forEach(function (cell) {
+            cell.addEventListener("click", function () {
+              var d = new Date(parseInt(cell.getAttribute("data-t"), 10));
+              selectDate(d);
+              calPopover.classList.remove("open");
+            });
+          });
+      }
+      renderCalendarDays();
+
+      calPrev.addEventListener("click", function () {
+        var prevStart = findMonthStart(
+          new Date(calMonthStart.getTime() - 86400000),
+        );
+        if (prevStart >= firstAllowedMonthStart) {
+          calMonthStart = prevStart;
+          renderCalendarDays();
+        }
+      });
+      calNext.addEventListener("click", function () {
+        var len = getMonthLength(calMonthStart);
+        var nextStart = new Date(calMonthStart);
+        nextStart.setDate(nextStart.getDate() + len);
+        if (nextStart <= lastAllowedMonthStart) {
+          calMonthStart = nextStart;
+          renderCalendarDays();
+        }
+      });
+      calToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        calPopover.classList.toggle("open");
+      });
+      document.addEventListener("click", function (e) {
+        if (!calPopover.contains(e.target) && e.target !== calToggle) {
+          calPopover.classList.remove("open");
+        }
+      });
+
+      document.getElementById("backTo1").addEventListener("click", function () {
+        goToStep(1);
+      });
+      document.getElementById("toStep3").addEventListener("click", function () {
+        goToStep(3);
+      });
+
+      // Step 3: contact
+      document.getElementById("backTo2").addEventListener("click", function () {
+        goToStep(2);
+      });
+      document.getElementById("toStep4").addEventListener("click", function () {
+        var name = document.getElementById("inpName").value.trim();
+        var phone = document.getElementById("inpPhone").value.trim();
+        var nameField = document.getElementById("fName");
+        var phoneField = document.getElementById("fPhone");
+        var valid = true;
+
+        if (name.length < 2) {
+          nameField.classList.add("error");
+          valid = false;
+        } else {
+          nameField.classList.remove("error");
+        }
+
+        var phoneOk = /^0?9\d{9}$/.test(phone.replace(/\s|-/g, ""));
+        if (!phoneOk) {
+          phoneField.classList.add("error");
+          valid = false;
+        } else {
+          phoneField.classList.remove("error");
+        }
+
+        if (!valid) return;
+
+        state.name = name;
+        state.phone = phone;
+
+        document.getElementById("sumService").textContent = state.service;
+        document.getElementById("sumDuration").textContent = state.duration;
+        document.getElementById("sumDateTime").textContent =
+          state.date + " — ساعت " + state.time;
+        document.getElementById("sumName").textContent = state.name;
+        document.getElementById("sumPhone").textContent = state.phone;
+        document.getElementById("sumPrice").textContent = state.price;
+
+        goToStep(4);
+      });
+
+      document.getElementById("backTo3").addEventListener("click", function () {
+        goToStep(3);
+      });
+
+      // Step 4: confirm
+      var confirmBtn = document.getElementById("confirmBooking");
+      confirmBtn.addEventListener("click", async function () {
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = "در حال ثبت...";
+
+        var payload = {
+          booking_date: toIsoDate(state.dateObj),
+          booking_time: state.timeValue + ":00",
+          customer_name: state.name,
+          customer_phone: state.phone,
+          service_name: state.service,
+          total_duration: state.minutes,
+          status: "confirmed",
+          source: "site",
+        };
+
+        try {
+          var res = await sb.from("bookings").insert(payload);
+          if (res.error) {
+            confirmBtn.disabled = false;
+            confirmBtn.textContent = "تایید نهایی رزرو";
+            if (res.error.code === "23505") {
+              alert(
+                "این تایم همین الان توسط شخص دیگه‌ای رزرو شد. لطفاً یک ساعت دیگه انتخاب کن.",
+              );
+              goToStep(2);
+              loadTakenTimesForDay(state.dateObj);
+            } else {
+              alert("مشکلی در ثبت رزرو پیش اومد. دوباره امتحان کن.");
+            }
+            return;
+          }
+        } catch (err) {
+          console.error(err);
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = "تایید نهایی رزرو";
+          alert("مشکلی در ارتباط با سرور پیش اومد. دوباره امتحان کن.");
+          return;
+        }
+
+        document
+          .getElementById("bookingMain")
+          .querySelectorAll(".panel")
+          .forEach(function (p) {
+            p.classList.remove("active");
+          });
+        document.getElementById("stepsBar").style.display = "none";
+        document.getElementById("sumService2").textContent = state.service;
+        document.getElementById("sumDateTime2").textContent =
+          state.date + " — ساعت " + state.time;
+        document.getElementById("sumName2").textContent = state.name;
+        document.getElementById("successPanel").classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    </script>
+  </body>
 </html>
