@@ -147,6 +147,15 @@
         opacity: 0.45;
         text-decoration: line-through;
       }
+      .note-line {
+        display: block;
+        white-space: normal;
+        max-width: 230px;
+        margin-top: 5px;
+        color: var(--rose-deep);
+        font-size: 0.75rem;
+        line-height: 1.5;
+      }
 
       #loginBox {
         max-width: 340px;
@@ -350,16 +359,20 @@
         display: flex;
         gap: 10px;
         overflow-x: auto;
+        overflow-y: hidden;
         padding-bottom: 8px;
         -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
         scrollbar-width: none;
         -ms-overflow-style: none;
       }
       .day-scroll::-webkit-scrollbar {
         display: none;
+        width: 0;
+        height: 0;
       }
       .day-card {
-        flex: 0 0 calc((100% - 30px) / 4);
+        flex: 0 0 74px;
         min-width: 74px;
         display: flex;
         flex-direction: column;
@@ -554,6 +567,12 @@
         "sb_publishable_Pv5AZFjGgd2JIgjyQt6eOA_IXTFokPu",
       );
 
+      function escapeHtml(str) {
+        var div = document.createElement("div");
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
       async function login() {
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
@@ -597,7 +616,7 @@
         <tr>
           <td>${new Date(b.booking_date + "T00:00:00").toLocaleDateString("fa-IR", { day: "numeric", month: "short" })}</td>
           <td>${b.booking_time.slice(0, 5)}</td>
-          <td>${b.customer_name || "—"} ${b.customer_phone ? `<br><small>${b.customer_phone}</small>` : ""}</td>
+          <td>${b.customer_name || "—"} ${b.customer_phone ? `<br><small>${b.customer_phone}</small>` : ""} ${b.notes ? `<span class="note-line">${escapeHtml(b.notes)}</span>` : ""}</td>
           <td>${b.service_name || "—"}</td>
           <td>${b.total_duration} دقیقه</td>
           <td><span class="badge ${b.source}">${b.source === "site" ? "سایت" : "دستی"}</span></td>
