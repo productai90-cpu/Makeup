@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>سونیا میکاپ آرتیست — Beauty, Refined</title>
+  <meta name="description" content="سونیا میکاپ آرتیست — refined beauty services, signature looks and occasion makeup.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap');
+    :root{
+      --ink:#302a2b;
+      --muted:#7c7071;
+      --rose:#d9b8bb;
+      --rose-deep:#b98e93;
+      --blush:#f4e9e8;
+      --cream:#fbf8f6;
+      --paper:#fffdfc;
+      --line:#e8dedd;
+      --white:#fff;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --max:1240px;
+    }
+    *{box-sizing:border-box}
+
+    html[dir="rtl"] .hero-copy{padding:130px 4vw 100px 10vw}
+    html[dir="rtl"] .hero-copy-inner{margin-left:auto;margin-right:0;padding-right:0;padding-left:0}
+    html[dir="rtl"] .service-card{text-align:right}
+    html[dir="rtl"] .service-detail{justify-content:flex-start}
+    html[dir="rtl"] .work-number{right:auto;left:18px}
+    html[dir="rtl"] .about-visual:before{right:auto;left:-30px}
+    html[dir="rtl"] .visual-placeholder{direction:rtl}
+    html[dir="rtl"] .brand{text-align:right}
+    @media(max-width:900px){
+      html[dir="rtl"] .hero-copy{padding:145px 20px 70px}
+      html[dir="rtl"] .hero-copy-inner{padding-right:0}
+    }
+    @media(max-width:620px){
+      html[dir="rtl"] .hero-copy{padding:145px 16px 60px}
+    }
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+    .container{width:min(calc(100% - 64px),var(--max));margin:auto}
+    .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose-deep);font-weight:700}
+    h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.03;margin:0}
+    h1{font-size:clamp(56px,7vw,102px);letter-spacing:-.045em}
+    h2{font-size:clamp(40px,5vw,66px);letter-spacing:-.035em}
+    h3{font-size:28px}
+    p{margin:0;color:var(--muted)}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:12px;
+      min-height:48px;padding:0 25px;border:1px solid var(--ink);
+      background:var(--ink);color:white;text-transform:uppercase;
+      letter-spacing:.14em;font-size:10px;font-weight:700;transition:.25s
+    }
+    .btn:hover{background:transparent;color:var(--ink)}
+    .btn.light{background:transparent;color:var(--ink)}
+    .btn.light:hover{background:var(--ink);color:#fff}
+    .btn.primary{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff}
+    .btn.primary:hover{background:transparent;color:var(--rose-deep)}
+    .site-header{
+      position:absolute;z-index:10;top:0;left:0;width:100%;height:84px;
+      display:flex;align-items:center
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;flex-direction:column;line-height:1}
+    .brand-main{font-family:var(--serif);font-size:26px;letter-spacing:-.03em}
+    .brand-sub{font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+    .nav-links{display:flex;gap:32px;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+    .nav-links a{position:relative}
+    .nav-links a:after{content:"";position:absolute;left:0;bottom:-7px;width:0;height:1px;background:var(--ink);transition:.25s}
+    .nav-links a:hover:after{width:100%}
+    .nav-cta{font-size:9px;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:5px}
+    .menu{display:none;background:none;border:0;padding:8px;position:relative;z-index:30}
+    .menu span{display:block;width:24px;height:1px;background:var(--ink);margin:6px 0;transition:.25s}
+    .mobile-nav{
+      position:fixed;inset:0;z-index:20;background:var(--paper);
+      display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+      opacity:0;visibility:hidden;transform:translateY(-8px);
+      transition:opacity .3s ease,transform .3s ease,visibility .3s
+    }
+    .mobile-nav a{font-family:var(--serif);font-size:24px}
+    .mobile-nav .btn{margin-top:8px}
+    body.menu-open{overflow:hidden}
+    body.menu-open .mobile-nav{opacity:1;visibility:visible;transform:translateY(0)}
+    body.menu-open .menu span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    body.menu-open .menu span:nth-child(2){opacity:0}
+    body.menu-open .menu span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .hero{
+      min-height:780px;background:var(--blush);
+      display:grid;grid-template-columns:1fr 1fr;align-items:stretch
+    }
+    .hero-copy{display:flex;align-items:center;padding:130px 8vw 100px 0}
+    .hero-copy-inner{max-width:610px;margin-left:auto;padding-left:8vw}
+    .hero h1{max-width:640px;margin:18px 0 26px}
+    .hero h1 em{font-style:italic;color:#8f6c70}
+    .hero-desc{max-width:520px;font-size:15px;margin-bottom:34px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .hero-visual{min-height:780px;position:relative;overflow:hidden;background:var(--blush)}
+    .hero-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%}
+    .shape{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.35);pointer-events:none}
+    .shape.one{width:380px;height:380px;right:13%;top:18%}
+    .shape.two{width:540px;height:540px;right:-8%;top:6%}
+    section{padding:120px 0}
+    .about{background:var(--paper)}
+    .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:80px;align-items:center}
+    .about-visual{height:560px;background:linear-gradient(145deg,#eee1df,#f9f4f1);position:relative;overflow:hidden}
+    .about-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%}
+    .about-visual:before{content:"SONIA";font-family:var(--serif);font-size:150px;color:rgba(100,70,72,.06);position:absolute;right:-30px;bottom:10px}
+    .about-visual .frame{position:absolute;inset:32px;border:1px solid rgba(88,69,71,.16)}
+    .about-copy{max-width:560px}
+    .about-copy h2{margin:14px 0 25px}
+    .about-copy p + p{margin-top:16px}
+    .portfolio{background:#f6eeee}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:48px}
+    .section-head .intro{max-width:430px}
+    .section-head h2{margin-top:12px}
+    .gallery{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .work{
+      min-height:330px;background:linear-gradient(145deg,#e9d8d8,#f7efed);
+      border:1px solid rgba(94,70,72,.12);position:relative;overflow:hidden
+    }
+    .work img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+    .work:hover img{transform:scale(1.04)}
+    .work-overlay{
+      position:absolute;inset:0;background:linear-gradient(0deg,rgba(30,20,21,.62) 0%,rgba(30,20,21,.05) 55%,transparent 100%);
+      opacity:0;transition:.3s ease;display:flex;align-items:flex-end;padding:20px;z-index:1
+    }
+    .work:hover .work-overlay{opacity:1}
+    .work-caption{color:#fff;font-family:var(--serif);font-size:16px;letter-spacing:.01em;transform:translateY(6px);transition:.3s ease}
+    .work:hover .work-caption{transform:translateY(0)}
+    .work:nth-child(1){grid-column:span 5;min-height:520px}
+    .work:nth-child(2){grid-column:span 7}
+    .work:nth-child(3){grid-column:span 4}
+    .work:nth-child(4){grid-column:span 4}
+    .work:nth-child(5){grid-column:span 4}
+    .work:nth-child(6){grid-column:span 7;min-height:400px}
+    .work:nth-child(7){grid-column:span 5;min-height:400px}
+    .work-number{position:absolute;top:16px;right:18px;font-family:var(--serif);font-size:18px;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.35);z-index:1}
+    .portfolio-more{display:flex;justify-content:center;margin-top:40px}
+    .services{background:var(--paper)}
+    .service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .service-card{border:1px solid var(--line);background:#fff;padding:34px;padding-bottom:74px;position:relative;transition:.25s}
+    .service-card:hover{transform:translateY(-3px);border-color:#cbb1b3;box-shadow:0 18px 45px rgba(74,48,52,.07)}
+    .service-index{font-size:9px;letter-spacing:.18em;color:var(--rose-deep);margin-bottom:13px}
+    .service-card h3{margin-bottom:11px}
+    .service-detail{display:flex;gap:20px;margin-top:19px;font-size:12.5px;letter-spacing:.03em;color:#6b5c5e;font-weight:500}
+    .service-price{font-family:var(--serif);font-size:25px;white-space:nowrap;margin-top:20px}
+    .service-arrow{position:absolute;left:24px;bottom:24px;width:38px;height:38px;border:1px solid var(--line);display:grid;place-items:center;transition:.25s}
+    .service-card:hover .service-arrow{background:var(--ink);border-color:var(--ink);color:#fff}
+    .experience{background:#302a2b;color:#fff}
+    .experience p{color:#c9babc}
+    .experience-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:end}
+    .experience h2{max-width:700px}
+    .experience-copy{max-width:460px}
+    .experience-copy p{margin:22px 0 28px}
+    footer{background:#262123;color:#e9dfe0;padding:45px 0 30px}
+    .footer-row{display:flex;justify-content:space-between;align-items:end;gap:30px}
+    .footer-brand .brand-main{color:#fff}
+    .footer-brand .brand-sub{color:#a9999a}
+    .footer-note{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9e9091}
+    @media(max-width:900px){
+      .container{width:min(calc(100% - 40px),var(--max))}
+      .nav-links,.nav-cta{display:none}
+      .menu{display:block}
+      .hero{grid-template-columns:1fr;min-height:auto}
+      .hero-copy{padding:145px 0 70px}
+      .hero-copy-inner{margin:0;padding:0}
+      .hero-visual{min-height:470px}
+      .about-grid,.experience-grid{grid-template-columns:1fr;gap:45px}
+      .about-visual{height:420px}
+      .gallery{grid-template-columns:1fr 1fr}
+      .work,.work:nth-child(n){grid-column:span 1;min-height:280px}
+      .work:nth-child(1),.work:nth-child(6){min-height:420px}
+    }
+    @media(max-width:620px){
+      section{padding:82px 0}
+      .container{width:calc(100% - 32px)}
+      .hero h1{font-size:54px}
+      .hero-visual{min-height:360px}
+      .section-head{display:block}
+      .section-head .intro{margin-top:18px}
+      .gallery,.service-grid{grid-template-columns:1fr}
+      .work,.work:nth-child(n),.work:nth-child(1),.work:nth-child(6){grid-column:auto;min-height:330px}
+      .service-card{padding-bottom:34px}
+      .service-arrow{display:none}
+      .footer-row{display:block}
+      .footer-note{margin-top:25px}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#">
+        <span class="brand-main">سونیا</span>
+        <span class="brand-sub">میکاپ آرتیست</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#about">درباره من</a>
+        <a href="#portfolio">نمونه‌کارها</a>
+        <a href="#services">خدمات</a>
+        <a href="#contact">تماس</a>
+      </nav>
+      <a class="nav-cta" href="booking.html">رزرو وقت</a>
+      <button class="menu" aria-label="باز کردن منو" onclick="document.body.classList.toggle('menu-open')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav class="mobile-nav" aria-label="منوی موبایل" onclick="if(event.target.tagName==='A')document.body.classList.remove('menu-open')">
+      <a href="#about">درباره من</a>
+      <a href="#portfolio">نمونه‌کارها</a>
+      <a href="#services">خدمات</a>
+      <a href="#contact">تماس</a>
+      <a class="btn primary" href="booking.html">رزرو وقت</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="hero-copy-inner">
+          <div class="eyebrow">سونیا میکاپ آرتیست</div>
+          <h1>زیبایی، <em>با ظرافت</em> برای هر مناسبت.</h1>
+          <p class="hero-desc">میکاپ حرفه‌ای با فینیشی ظریف و حساب‌شده؛ برای اینکه خودت باشی، فقط کمی درخشان‌تر و خاص‌تر.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="booking.html">رزرو نوبت</a>
+            <a class="btn light" href="#portfolio">مشاهده نمونه‌کارها</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="images/hero.jpg" alt="سونیا میکاپ آرتیست">
+        <div class="shape one"></div><div class="shape two"></div>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="container about-grid">
+        <div class="about-visual">
+          <img src="images/about.jpg" alt="سونیا، میکاپ آرتیست">
+          <div class="frame"></div>
+        </div>
+        <div class="about-copy">
+          <div class="eyebrow">درباره من سونیا</div>
+          <h2>هنرمند شخصی زیبایی شما.</h2>
+          <p>هر میکاپ با شنیدن و شناختن شما شروع می‌شود. سونیا میکاپی ظریف و زنانه خلق می‌کند که با ویژگی‌های چهره، سلیقه و مناسبت شما هماهنگ باشد؛ از زیبایی ساده روزمره تا یک میکاپ کامل برای مراسم.</p>
+          <p>تجربه‌ای آرام، شخصی و دقیق؛ با تمرکز بر پوست، تعادل و فینیشی که در عکس زیباست اما هرگز اغراق‌شده به نظر نمی‌رسد.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="portfolio" id="portfolio">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">منتخب نمونه‌کارها</div>
+            <h2>نگاهی به هنر من.</h2>
+          </div>
+          <p class="intro">گالری منتخب از میکاپ‌های عروس، ادیتوریال، مراسم و استایل‌های اختصاصی. تصاویر واقعی نمونه‌کارها بعداً بدون تغییر ساختار طراحی قابل جایگزینی هستند.</p>
+        </div>
+        <div class="gallery">
+          <div class="work"><img src="images/work-01.jpg" alt="نمونه‌کار میکاپ عروس"><div class="work-overlay"><span class="work-caption">میکاپ مدل ۰۱</span></div><span class="work-number">01</span></div>
+          <div class="work"><img src="images/work-02.jpg" alt="نمونه‌کار میکاپ ادیتوریال"><div class="work-overlay"><span class="work-caption">میکاپ مدل ۰۲</span></div><span class="work-number">02</span></div>
+          <div class="work"><img src="images/work-03.jpg" alt="نمونه‌کار میکاپ طبیعی روزمره"><div class="work-overlay"><span class="work-caption">میکاپ مدل ۰۳</span></div><span class="work-number">03</span></div>
+          <div class="work"><img src="images/work-04.jpg" alt="نمونه‌کار میکاپ مراسم"><div class="work-overlay"><span class="work-caption">میکاپ مدل ۰۴</span></div><span class="work-number">04</span></div>
+          <div class="work"><img src="images/work-05.jpg" alt="نمونه‌کار میکاپ خلاقانه"><div class="work-overlay"><span class="work-caption">میکاپ مدل ۰۵</span></div><span class="work-number">05</span></div>
+          <div class="work"><img src="images/work-06.jpg" alt="سونیا در حال اجرای میکاپ"><div class="work-overlay"><span class="work-caption">میکاپ مدل ۰۶</span></div><span class="work-number">06</span></div>
+          <div class="work"><img src="images/work-07.jpg" alt="نمونه‌کار میکاپ سافت‌گلم"><div class="work-overlay"><span class="work-caption">میکاپ مدل ۰۷</span></div><span class="work-number">07</span></div>
+        </div>
+        <div class="portfolio-more">
+          <a class="btn light" href="portfolio.html">مشاهده همه نمونه‌کارها</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">خدمات & pricing</div>
+            <h2>استایل موردنظر خود را انتخاب کنید.</h2>
+          </div>
+          <p class="intro">جزئیات هر خدمت به‌صورت شفاف؛ شامل توضیحات، مدت زمان و قیمت، تا قبل از رزرو دقیقاً بدانید چه چیزی دریافت می‌کنید.</p>
+        </div>
+
+        <div class="service-grid">
+          <article class="service-card">
+            <div class="service-index">01 / اختصاصی</div>
+            <h3>میکاپ اختصاصی</h3>
+            <p>میکاپ سافت‌گلم متناسب با چهره، پوست و استایل شخصی شما؛ شامل زیرسازی، چشم، ابرو، لب و فینیش نهایی.</p>
+            <div class="service-detail"><span>۹۰ دقیقه</span><span>از نچرال تا سافت‌گلم</span></div>
+            <div class="service-price">۲,۵۰۰,۰۰۰ تومان</div>
+            <div class="service-arrow">↗</div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-index">02 / مراسم</div>
+            <h3>میکاپ مراسم</h3>
+            <p>میکاپ کامل و دوربین‌پسند برای مهمانی‌ها، جشن‌ها و مناسبت‌های خاص، با تمرکز بیشتر روی چشم و پوست.</p>
+            <div class="service-detail"><span>۱۲۰ دقیقه</span><span>فول‌گلم</span></div>
+            <div class="service-price">۳,۵۰۰,۰۰۰ تومان</div>
+            <div class="service-arrow">↗</div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-index">03 / عروس</div>
+            <h3>میکاپ عروس</h3>
+            <p>میکاپ ماندگار عروس با آماده‌سازی پوست، زیرسازی دقیق و فینیش ظریف و حرفه‌ای برای عکاسی.</p>
+            <div class="service-detail"><span>۱۵۰ دقیقه</span><span>تست میکاپ پیشنهاد می‌شود</span></div>
+            <div class="service-price">۷,۵۰۰,۰۰۰ تومان</div>
+            <div class="service-arrow">↗</div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-index">04 / ادیتوریال</div>
+            <h3>میکاپ ادیتوریال / عکاسی</h3>
+            <p>میکاپ خلاقانه برای کمپین، پرتره و تولید محتوا؛ هماهنگ با نور، لباس و کانسپت پروژه.</p>
+            <div class="service-detail"><span>۱۲۰ دقیقه</span><span>بر اساس بریف</span></div>
+            <div class="service-price">۴,۵۰۰,۰۰۰ تومان</div>
+            <div class="service-arrow">↗</div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-index">05 / آموزش</div>
+            <h3>آموزش خصوصی میکاپ</h3>
+            <p>یک جلسه خصوصی متناسب با روتین، فرم چهره و محصولات شما؛ با آموزش مرحله‌به‌مرحله‌ای که بتوانید دوباره اجرا کنید.</p>
+            <div class="service-detail"><span>۹۰ دقیقه</span><span>آموزش شخصی</span></div>
+            <div class="service-price">۳,۰۰۰,۰۰۰ تومان</div>
+            <div class="service-arrow">↗</div>
+          </article>
+
+          <article class="service-card">
+            <div class="service-index">06 / لوکیشن</div>
+            <h3>میکاپ در محل</h3>
+            <p>ارائه خدمات در محل برای مراسم خصوصی، عروسی و پروژه‌های تولیدی. هزینه رفت‌وآمد بر اساس موقعیت مکانی جداگانه محاسبه می‌شود.</p>
+            <div class="service-detail"><span>با هماهنگی</span><span>امکان حضور در محل</span></div>
+            <div class="service-price">از ۵,۵۰۰,۰۰۰ تومان</div>
+            <div class="service-arrow">↗</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience" id="contact">
+      <div class="container experience-grid">
+        <div>
+          <div class="eyebrow" style="color:#c7a8aa">تجربه سونیا</div>
+          <h2>زیبا، دقیق و کاملاً شخصی.</h2>
+        </div>
+        <div class="experience-copy">
+          <p>برای خلق استایل خود آماده‌اید؟ خدمت مناسب را انتخاب کنید و در یک مشاوره خصوصی، آن را دقیقاً مطابق سلیقه خودتان شخصی‌سازی کنید.</p>
+          <a class="btn primary" href="booking.html">مشاوره و رزرو</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-main">سونیا</span><span class="brand-sub">میکاپ آرتیست</span></div>
+      </div>
+      <div class="footer-note">© 2026 سونیا میکاپ آرتیست · تمامی حقوق محفوظ است</div>
+    </div>
+  </footer>
+</body>
+</html>

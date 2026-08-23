@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>همه نمونه‌کارها — سونیا میکاپ آرتیست</title>
+  <meta name="description" content="گالری کامل نمونه‌کارهای سونیا میکاپ آرتیست.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap');
+    :root{
+      --ink:#302a2b;
+      --muted:#7c7071;
+      --rose:#d9b8bb;
+      --rose-deep:#b98e93;
+      --blush:#f4e9e8;
+      --cream:#fbf8f6;
+      --paper:#fffdfc;
+      --line:#e8dedd;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --max:1240px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(calc(100% - 64px),var(--max));margin:auto}
+    .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--rose-deep);font-weight:700}
+    h1,h2{font-family:var(--serif);font-weight:400;line-height:1.05;margin:0}
+    h1{font-size:clamp(38px,5vw,58px);letter-spacing:-.03em}
+    p{margin:0;color:var(--muted)}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      min-height:46px;padding:0 24px;border:1px solid var(--ink);
+      background:var(--ink);color:#fff;text-transform:uppercase;
+      letter-spacing:.14em;font-size:10px;font-weight:700;transition:.25s
+    }
+    .btn:hover{background:transparent;color:var(--ink)}
+    .btn.light{background:transparent;color:var(--ink)}
+    .btn.light:hover{background:var(--ink);color:#fff}
+    .btn.primary{background:var(--rose-deep);border-color:var(--rose-deep);color:#fff}
+    .btn.primary:hover{background:transparent;color:var(--rose-deep)}
+
+    header.site-header{padding:26px 0;border-bottom:1px solid var(--line)}
+    .nav{display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;flex-direction:column;line-height:1;text-align:right}
+    .brand-main{font-family:var(--serif);font-size:24px;letter-spacing:-.03em}
+    .brand-sub{font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+    .back-link{font-size:11px;letter-spacing:.08em;display:flex;align-items:center;gap:8px;color:var(--muted)}
+    .back-link:hover{color:var(--ink)}
+
+    .page-head{padding:70px 0 50px;background:var(--blush)}
+    .page-head .eyebrow{margin-bottom:14px}
+    .page-head p{max-width:520px;margin-top:16px}
+
+    .gallery-wrap{padding:70px 0 110px}
+    .modern-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:22px;
+    }
+    .g-item{position:relative;overflow:hidden;background:var(--blush);aspect-ratio:4/5}
+    .g-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+    .g-item:hover img{transform:scale(1.05)}
+    .g-caption{
+      position:absolute;left:0;right:0;bottom:0;padding:16px 18px;
+      display:flex;justify-content:space-between;align-items:center;
+      background:linear-gradient(0deg,rgba(30,20,21,.55),transparent);
+      color:#fff;font-size:11px;letter-spacing:.05em;opacity:0;transition:.25s
+    }
+    .g-item:hover .g-caption{opacity:1}
+    .g-num{font-family:var(--serif);font-size:15px}
+
+    .cta-band{background:#302a2b;color:#fff;padding:80px 0;text-align:center}
+    .cta-band h2{color:#fff;max-width:600px;margin:14px auto 30px}
+    .cta-band .eyebrow{color:#c7a8aa}
+
+    footer{background:#262123;color:#e9dfe0;padding:40px 0 26px}
+    .footer-row{display:flex;justify-content:space-between;align-items:end;gap:30px}
+    .footer-brand .brand-main{color:#fff}
+    .footer-brand .brand-sub{color:#a9999a}
+    .footer-note{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#9e9091}
+
+    @media(max-width:900px){
+      .container{width:min(calc(100% - 40px),var(--max))}
+      .modern-grid{grid-template-columns:repeat(2,1fr)}
+      .nav .brand-sub{display:none}
+    }
+    @media(max-width:560px){
+      .page-head{padding:56px 0 40px}
+      .gallery-wrap{padding:50px 0 70px}
+      .modern-grid{grid-template-columns:1fr;gap:16px}
+      .footer-row{display:block}
+      .footer-note{margin-top:20px}
+      .cta-band{padding:56px 0}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <span class="brand-main">سونیا</span>
+        <span class="brand-sub">میکاپ آرتیست</span>
+      </a>
+      <a class="back-link" href="index.html">← بازگشت به صفحه اصلی</a>
+    </div>
+  </header>
+
+  <section class="page-head">
+    <div class="container">
+      <div class="eyebrow">همه نمونه‌کارها</div>
+      <h1>گالری کامل کارهای سونیا.</h1>
+      <p>مجموعه‌ی کامل میکاپ‌های عروس، مراسم، ادیتوریال و استایل‌های اختصاصی؛ در یک نگاه.</p>
+    </div>
+  </section>
+
+  <section class="gallery-wrap">
+    <div class="container">
+      <div class="modern-grid">
+        <div class="g-item">
+          <img src="images/work-01.jpg" alt="نمونه‌کار میکاپ عروس">
+          <div class="g-caption"><span>میکاپ عروس</span><span class="g-num">01</span></div>
+        </div>
+        <div class="g-item">
+          <img src="images/work-02.jpg" alt="نمونه‌کار میکاپ ادیتوریال">
+          <div class="g-caption"><span>ادیتوریال</span><span class="g-num">02</span></div>
+        </div>
+        <div class="g-item">
+          <img src="images/work-03.jpg" alt="نمونه‌کار میکاپ طبیعی روزمره">
+          <div class="g-caption"><span>میکاپ طبیعی</span><span class="g-num">03</span></div>
+        </div>
+        <div class="g-item">
+          <img src="images/work-04.jpg" alt="نمونه‌کار میکاپ مراسم">
+          <div class="g-caption"><span>میکاپ مراسم</span><span class="g-num">04</span></div>
+        </div>
+        <div class="g-item">
+          <img src="images/work-05.jpg" alt="نمونه‌کار میکاپ خلاقانه">
+          <div class="g-caption"><span>خلاقانه</span><span class="g-num">05</span></div>
+        </div>
+        <div class="g-item">
+          <img src="images/work-06.jpg" alt="سونیا در حال اجرای میکاپ">
+          <div class="g-caption"><span>پشت‌صحنه</span><span class="g-num">06</span></div>
+        </div>
+        <div class="g-item">
+          <img src="images/work-07.jpg" alt="نمونه‌کار میکاپ سافت‌گلم">
+          <div class="g-caption"><span>سافت‌گلم</span><span class="g-num">07</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container">
+      <div class="eyebrow">آماده‌ای؟</div>
+      <h2>استایل موردنظرت رو با سونیا رزرو کن.</h2>
+      <a class="btn primary" href="booking.html">رزرو نوبت</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-row">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-main">سونیا</span><span class="brand-sub">میکاپ آرتیست</span></div>
+      </div>
+      <div class="footer-note">© 2026 سونیا میکاپ آرتیست · تمامی حقوق محفوظ است</div>
+    </div>
+  </footer>
+</body>
+</html>
